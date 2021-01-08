@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
+import * as actions from '../actions'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -13,8 +15,22 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export const SideBar = () => {
+const SideBar = props => {
     const classes = useStyles();
+
+    useEffect(() => {
+        props.getPosts();
+    });
 
     return <div className={classes.root}>dsd</div>
 };
+
+const mapStateToProps = state => ({})
+  
+const mapDispatchToProps = dispatch => ({
+    getPosts: () => {
+        dispatch(actions.getPosts())
+    }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SideBar);
