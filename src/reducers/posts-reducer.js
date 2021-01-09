@@ -1,19 +1,30 @@
 const defaultState = {
+    loadingPosts: false,
     errorInLoad: false,
     posts: []
 };
 
 const reducer = (state = defaultState, action) => {
     switch(action.type) {
-        case 'OPEN_SIDEBAR':
+        case 'POSTS_LOAD_IN_PROCESS':
             return {
                 ...state,
-                sidebarIsOpen: true
+                loadingPosts: true
             };
-        case 'CLOSE_SIDEBAR':
+        case 'POSTS_LOAD_ERROR': 
             return {
                 ...state,
-                sidebarIsOpen: false
+                loadingPosts: false,
+                errorInLoad: true,
+            };
+        case 'POSTS_LOAD_SUCCESS': 
+            const { children: data } = action.payload;
+
+            return {
+                ...state,
+                loadingPosts: false,
+                errorInLoad: false,
+                posts: data.map(({ data }) => data)
             };
         default: return state
     }

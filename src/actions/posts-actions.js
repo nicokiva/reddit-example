@@ -1,5 +1,7 @@
 export const getPosts = () => {
     return async dispatch => {
+        dispatch({ type: 'POSTS_LOAD_IN_PROCESS' });
+
         const response = await fetch(`metadata.json`, {
             mode: 'cors',
         });
