@@ -14,3 +14,7 @@ export const getPosts = () => {
         return dispatch({ type: 'POSTS_LOAD_SUCCESS', payload: data })
     };
 };
+
+export const selectPost = post => {
+    return { type: 'SELECT_POST', payload: post }
+};

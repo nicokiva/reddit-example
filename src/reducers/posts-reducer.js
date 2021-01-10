@@ -1,7 +1,8 @@
 const defaultState = {
     loadingPosts: false,
     errorInLoad: false,
-    posts: []
+    posts: [],
+    selectedPost: undefined
 };
 
 const reducer = (state = defaultState, action) => {
@@ -26,6 +27,14 @@ const reducer = (state = defaultState, action) => {
                 errorInLoad: false,
                 posts: data.map(({ data }) => data)
             };
+        case 'SELECT_POST': 
+            const { payload: selectedPost } = action;
+
+            return {
+                ...state,
+                selectedPost
+            };
+            
         default: return state
     }
 }
