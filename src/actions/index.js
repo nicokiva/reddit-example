@@ -1,2 +1,1 @@
-export { openSidebar } from './app-actions';
-export { getPosts } from './posts-actions';
+export * from './posts-actions';

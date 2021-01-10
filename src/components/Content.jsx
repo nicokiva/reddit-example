@@ -1,24 +1,22 @@
 import { React, useEffect } from 'react';
-import { connect } from 'react-redux';
-import * as actions from '../actions'
 import SideBar from './SideBar';
+import { getPosts } from '../actions'
+import { connect } from 'react-redux';
 
-const Component = (props) => {
+const Content = ({ posts, getPosts }) => {
     useEffect(() => {
-       props.openSidebar();
-    });
+        getPosts();
+    }, []);
 
     return <>
-        <SideBar />
+        <SideBar posts={posts} />
     </>
 };
 
-const mapStateToProps = (state) => ({})
+const mapStateToProps = ({ postsReducer }) => ({ ...postsReducer });
   
-const mapDispatchToProps = (dispatch) => ({
-    openSidebar: (userObj) => {
-        dispatch(actions.openSidebar(userObj))
-    }
+const mapDispatchToProps = dispatch => ({
+    getPosts: () => dispatch(getPosts())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Component);
+export default connect(mapStateToProps, mapDispatchToProps)(Content);
