@@ -29,7 +29,7 @@ const useStyles = makeStyles(() => ({
         transition: 'width 2s',
         width: '95vw',
         "@media(min-width: 500px)": {
-            width: '480px',
+            width: '520px',
         }
     },
     button: {

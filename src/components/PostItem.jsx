@@ -5,11 +5,17 @@ import { selectPost, discardPost } from '../actions'
 
 const useStyles = makeStyles(theme => ({
     root: {
+        transition: 'padding-left 2s',
         padding: '10px 0 0 10px',
         marginBottom: '10px',
         width: '90vw',
         "@media(min-width: 500px)": {
             width: '460px',
+        },
+        "@media(min-width: 800px)": {
+            '&.selected': {
+                paddingLeft: '40px'
+            }
         }
     },
     item: {
@@ -43,8 +49,10 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const PostItemInner = ({ post, selectPost, onClick }) => {
+const PostItemInner = ({ selectedPost, post, selectPost, onClick }) => {
     const classes = useStyles();
+
+    const isSelected = post === selectedPost;
 
     const handleItemClick = () => {
         selectPost(post);
@@ -56,7 +64,7 @@ const PostItemInner = ({ post, selectPost, onClick }) => {
     }
 
     return (
-        <article className={classes.root} onClick={handleItemClick}>
+        <article className={`${classes.root} ${isSelected ? 'selected' : ''}`} onClick={handleItemClick}>
             <div className={classes.item}>
                 <div className={classes.itemContainer}>
                     {post.thumbnail && <img className={classes.thumbnail} src={post.thumbnail} alt="thumbnail" />}
