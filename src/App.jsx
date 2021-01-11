@@ -6,6 +6,7 @@ const useStyles = makeStyles(() => ({
   root: {
       display: 'flex',
       backgroundColor: '#ffecd9',
+      overflow: 'hidden'
   }
 }));
 

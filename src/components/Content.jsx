@@ -4,13 +4,10 @@ import { makeStyles } from '@material-ui/core';
 const useStyles = makeStyles(() => ({
     root: {
         display: 'flex',
-        position: 'absolute',
-        left: 0,
-        top: 0,
         height: '100%',
-        padding: '0 20px 0 60px',
+        padding: '0 20px 0 20px',
         "@media(min-width: 800px)": {
-            position: "unset",
+            paddingLeft: '60px',
             width: '100%'
         }
     }

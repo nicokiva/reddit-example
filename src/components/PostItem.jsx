@@ -6,28 +6,33 @@ import { selectPost, discardPost } from '../actions'
 const useStyles = makeStyles(theme => ({
     root: {
         transition: 'padding-left 2s, width 2s',
-        padding: '10px 0 0 10px',
+        padding: '10px 10px 0',
         marginBottom: '10px',
-        width: '90vw',
         overflow: 'hidden',
+        width: 'calc(100vw - 20px)',
+        '&.is-discarding': {
+            width: 0,
+            '& $delete': {
+                width: 0,
+                border: 0
+            }
+        },
+        '&.is-selected': {
+            '& $itemContainer': {
+                backgroundColor: '#e8e8e8'
+            }
+        },
         "@media(min-width: 500px)": {
             width: '470px',
         },
         "@media(min-width: 800px)": {
-            '&.selected': {
+            '&.is-selected': {
                 paddingLeft: '40px'
-            },
-            '&.discarding': {
-                width: 0,
-                '& $delete': {
-                    width: 0,
-                    border: 0
-                }
             }
         },
     },
     itemContainer: {
-        transition: 'width 2s',
+        transition: 'width 2s, background-color 2s',
         display: 'flex',
         cursor: 'pointer',
         justifyContent: 'space-between',
@@ -38,7 +43,7 @@ const useStyles = makeStyles(theme => ({
         '&:hover': {
             opacity: 0.7
         },
-        width: '90vw',
+        width: 'calc(100vw - 20px)',
         "@media(min-width: 500px)": {
             width: '460px',
         },
@@ -55,8 +60,8 @@ const useStyles = makeStyles(theme => ({
         marginRight: '-10px',
         marginTop: '-10px',
         position: 'relative',
+        left: 'calc(50% - 7px)',
         top: '12px',
-        left: '90vw',
         "@media(min-width: 500px)": {
             left: 'calc(50% - 6px - 10px)', // 6px = icon width / 2, 10px = difference with container's margin
         },
@@ -89,7 +94,7 @@ const PostItemInner = ({ selectedPost, discardingPost, post, selectPost, discard
     }
 
     return (
-        <article className={`${classes.root} ${isSelected ? 'selected' : ''} ${isDiscarding ? 'discarding' : ''}`} onClick={handleItemClick}>
+        <article className={`${classes.root} ${isSelected ? 'is-selected' : ''} ${isDiscarding ? 'is-discarding' : ''}`} onClick={handleItemClick}>
             <img className={classes.delete} src="/delete-icon.svg" alt="delete" title="Discard" onClick={handleDelete} />
             <div className={classes.itemContainer}>
                 <div className={classes.item}>

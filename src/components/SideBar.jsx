@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { LoadingSpinner } from './utilitarian/LoadingSpinner';
 import { ErrorMessage } from './utilitarian/ErrorMessage';
@@ -27,7 +27,7 @@ const useStyles = makeStyles(() => ({
         height: '100vh',
         overflowY: 'auto',
         transition: 'width 2s',
-        width: '95vw',
+        width: '100vw',
         "@media(min-width: 500px)": {
             width: '520px',
         }
@@ -48,7 +48,7 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-const SideBarInner = ({ loadingPosts, errorInLoad, posts, sideBarIsOpen }) => {
+const SideBarInner = ({ loadingPosts, errorInLoad, posts, sideBarIsOpen, closeSideBar }) => {
     const classes = useStyles();
 
     const handleItemClick = () => {
