@@ -37,7 +37,8 @@ const useStyles = makeStyles(theme => ({
         cursor: 'pointer',
         justifyContent: 'space-between',
         backgroundColor: '#fff',
-        borderRadius: '10px',
+        borderTopLeftRadius: '10px',
+        borderTopRightRadius: '10px',
         textAlign: 'left',
         overflow: 'hidden',
         '&:hover': {
@@ -51,6 +52,15 @@ const useStyles = makeStyles(theme => ({
     item: {
         display: 'flex',
         minHeight: '100px',
+    },
+    info: {
+        borderBottomLeftRadius: '10px',
+        borderBottomRightRadius: '10px',
+        backgroundColor: 'rgb(255, 170, 138)',
+        width: 'calc(100vw - 20px)',
+        "@media(min-width: 500px)": {
+            width: '460px',
+        },
     },
     delete: {
         borderRadius: '50%',
@@ -66,13 +76,21 @@ const useStyles = makeStyles(theme => ({
             left: 'calc(50% - 6px - 10px)', // 6px = icon width / 2, 10px = difference with container's margin
         },
     },
+    postInfo: {
+        margin: '10px',
+        display: 'flex',
+        flexFlow: 'column',
+        justifyContent: 'space-between'
+    },
+    createdDate: {
+        textAlign: 'right',
+        fontSize: '13px',
+        color: '#6d6c6c'
+    },
     thumbnail: {
         maxWidth: '100px',
-        borderTopLeftRadius: '10px',
-        borderBottomLeftRadius: '10px',
     },
     title: {
-        margin: '5px 10px',
         fontWeight: 'bold'
     }
 }));
@@ -93,15 +111,27 @@ const PostItemInner = ({ selectedPost, discardingPost, post, selectPost, discard
         discardPost(post);
     }
 
+    const tryPad0 = number => number < 10 ? `0${number}` : number;
+
+    const date2string = stringifiedDate => {
+        const date = new Date(stringifiedDate);
+
+        return `${tryPad0(date.getMonth() + 1)}/${tryPad0(date.getDate())}/${date.getFullYear()} ${tryPad0(date.getHours())}:${tryPad0(date.getMinutes())}:${tryPad0(date.getSeconds())}`;
+    };
+
     return (
         <article className={`${classes.root} ${isSelected ? 'is-selected' : ''} ${isDiscarding ? 'is-discarding' : ''}`} onClick={handleItemClick}>
             <img className={classes.delete} src="/delete-icon.svg" alt="delete" title="Discard" onClick={handleDelete} />
             <div className={classes.itemContainer}>
                 <div className={classes.item}>
                     {post.thumbnail && <img className={classes.thumbnail} src={post.thumbnail} alt="thumbnail" />}
-                    <p className={classes.title}>{post.title}</p>
+                    <p className={classes.postInfo}>
+                        <span className={classes.title}>{post.title}</span>
+                        <span className={classes.createdDate}>{date2string(post.created_utc)}</span>
+                    </p>
                 </div>
             </div>
+            <div className={classes.info}>ddd</div>
         </article>
     );
 };
