@@ -3,8 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { LoadingSpinner } from './utilitarian/LoadingSpinner';
 import { ErrorMessage } from './utilitarian/ErrorMessage';
 import { PostItem } from './PostItem';
-import MenuIcon from '@material-ui/icons/Menu';
-import IconButton from '@material-ui/core/IconButton';
+import { connect } from 'react-redux';
+import { closeSideBar } from '../actions';
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -48,36 +48,30 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-export const SideBar = props => {
+const SideBarInner = ({ loadingPosts, errorInLoad, posts, sideBarIsOpen }) => {
     const classes = useStyles();
-    const [isOpened, setIsOpened] = useState(true);
-
-    const handleSideBarVisibilityStatus = () => {
-        setIsOpened(!isOpened);
-    };
 
     const handleItemClick = () => {
         if (window.outerWidth <= 800) {
-            setIsOpened(false);
+            closeSideBar();
         }
     };
 
     return (
-        <div className={`${classes.root} ${!isOpened ? 'collapsed' : ''}`}>
+        <div className={`${classes.root} ${!sideBarIsOpen ? 'collapsed' : ''}`}>
             <div className={classes.sideBar}>
-                {props.loadingPosts && <LoadingSpinner label="Loading posts..." />}
-                {props.errorInLoad && <ErrorMessage label="Error loading data" />}
-                {props.posts && props.posts.map(post => (<PostItem onClick={handleItemClick} key={post.id} post={post}></PostItem>))}
+                {loadingPosts && <LoadingSpinner label="Loading posts..." />}
+                {errorInLoad && <ErrorMessage label="Error loading data" />}
+                {posts && posts.map(post => (<PostItem onClick={handleItemClick} key={post.id} post={post}></PostItem>))}
             </div>
-            <IconButton
-                className={classes.button}
-                color="inherit"
-                aria-label="open drawer"
-                edge="start"
-                onClick={handleSideBarVisibilityStatus}
-            >
-                <MenuIcon />
-            </IconButton>
         </div>
     );
 };
+
+const mapStateToProps = ({ appReducer }) => ({ ...appReducer });
+  
+const mapDispatchToProps = dispatch => ({
+    closeSideBar: () => dispatch(closeSideBar())
+});
+
+export const SideBar = connect(mapStateToProps, mapDispatchToProps)(SideBarInner);

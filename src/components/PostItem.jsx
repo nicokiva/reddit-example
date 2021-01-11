@@ -9,31 +9,43 @@ const useStyles = makeStyles(theme => ({
         padding: '10px 0 0 10px',
         marginBottom: '10px',
         width: '90vw',
+        overflow: 'hidden',
         "@media(min-width: 500px)": {
-            width: '460px',
+            width: '470px',
         },
         "@media(min-width: 800px)": {
             '&.selected': {
                 paddingLeft: '40px'
             },
             '&.discarding': {
-                width: 0
+                width: 0,
+                '& $delete': {
+                    width: 0,
+                    border: 0
+                }
             }
-        }
+        },
     },
-    item: {
-        minHeight: '100px',
+    itemContainer: {
+        transition: 'width 2s',
         display: 'flex',
         cursor: 'pointer',
         justifyContent: 'space-between',
         backgroundColor: '#fff',
+        borderRadius: '10px',
         textAlign: 'left',
+        overflow: 'hidden',
         '&:hover': {
             opacity: 0.7
-        }
+        },
+        width: '90vw',
+        "@media(min-width: 500px)": {
+            width: '460px',
+        },
     },
-    itemContainer: {
-        display: 'flex'
+    item: {
+        display: 'flex',
+        minHeight: '100px',
     },
     delete: {
         borderRadius: '50%',
@@ -41,10 +53,18 @@ const useStyles = makeStyles(theme => ({
         height: '15px',
         width: '15px',
         marginRight: '-10px',
-        marginTop: '-10px'
+        marginTop: '-10px',
+        position: 'relative',
+        top: '12px',
+        left: '90vw',
+        "@media(min-width: 500px)": {
+            left: 'calc(50% - 6px - 10px)', // 6px = icon width / 2, 10px = difference with container's margin
+        },
     },
     thumbnail: {
         maxWidth: '100px',
+        borderTopLeftRadius: '10px',
+        borderBottomLeftRadius: '10px',
     },
     title: {
         margin: '5px 10px',
@@ -70,12 +90,12 @@ const PostItemInner = ({ selectedPost, discardingPost, post, selectPost, discard
 
     return (
         <article className={`${classes.root} ${isSelected ? 'selected' : ''} ${isDiscarding ? 'discarding' : ''}`} onClick={handleItemClick}>
-            <div className={classes.item}>
-                <div className={classes.itemContainer}>
+            <img className={classes.delete} src="/delete-icon.svg" alt="delete" title="Discard" onClick={handleDelete} />
+            <div className={classes.itemContainer}>
+                <div className={classes.item}>
                     {post.thumbnail && <img className={classes.thumbnail} src={post.thumbnail} alt="thumbnail" />}
                     <p className={classes.title}>{post.title}</p>
                 </div>
-                <img className={classes.delete} src="/delete-icon.svg" alt="delete" title="Discard" onClick={handleDelete} />
             </div>
         </article>
     );
