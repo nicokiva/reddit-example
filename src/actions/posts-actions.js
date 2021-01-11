@@ -1,5 +1,5 @@
-export const getPosts = () => {
-    return async dispatch => {
+export const getPosts = () => 
+    async dispatch => {
         dispatch({ type: 'POSTS_LOAD_IN_PROCESS' });
 
         const response = await fetch(`metadata.json`, {
@@ -13,8 +13,12 @@ export const getPosts = () => {
         const { data } = await response.json();
         return dispatch({ type: 'POSTS_LOAD_SUCCESS', payload: data })
     };
-};
 
 export const selectPost = post => ({ type: 'SELECT_POST', payload: post });
 
-export const discardPost = post => ({ type: 'DISCARD_POST', payload: post });
+export const discardPost = post => 
+    async dispatch => {
+        dispatch(({ type: 'DISCARDING_POST', payload: post }))
+
+        setTimeout(() => dispatch({ type: 'DISCARD_POST', payload: post }), 2000);
+    };

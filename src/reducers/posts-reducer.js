@@ -2,7 +2,8 @@ const defaultState = {
     loadingPosts: false,
     errorInLoad: false,
     posts: [],
-    selectedPost: undefined
+    selectedPost: undefined,
+    discardingPost: undefined
 };
 
 const reducer = (state = defaultState, action) => {
@@ -33,6 +34,20 @@ const reducer = (state = defaultState, action) => {
             return {
                 ...state,
                 selectedPost
+            };
+        case 'DISCARDING_POST': 
+            const { payload: discardingPost } = action;
+
+            return {
+                ...state,
+                discardingPost
+            };
+        case 'DISCARD_POST': 
+            const { payload: discarded } = action;
+
+            return {
+                ...state,
+                posts: state.posts.filter(post => post !== discarded)
             };
             
         default: return state

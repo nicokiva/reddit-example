@@ -5,7 +5,7 @@ import { selectPost, discardPost } from '../actions'
 
 const useStyles = makeStyles(theme => ({
     root: {
-        transition: 'padding-left 2s',
+        transition: 'padding-left 2s, width 2s',
         padding: '10px 0 0 10px',
         marginBottom: '10px',
         width: '90vw',
@@ -15,6 +15,9 @@ const useStyles = makeStyles(theme => ({
         "@media(min-width: 800px)": {
             '&.selected': {
                 paddingLeft: '40px'
+            },
+            '&.discarding': {
+                width: 0
             }
         }
     },
@@ -49,10 +52,11 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const PostItemInner = ({ selectedPost, post, selectPost, onClick }) => {
+const PostItemInner = ({ selectedPost, discardingPost, post, selectPost, discardPost, onClick }) => {
     const classes = useStyles();
 
     const isSelected = post === selectedPost;
+    const isDiscarding = post === discardingPost;
 
     const handleItemClick = () => {
         selectPost(post);
@@ -61,10 +65,11 @@ const PostItemInner = ({ selectedPost, post, selectPost, onClick }) => {
 
     const handleDelete = event => {
         event.stopPropagation();
+        discardPost(post);
     }
 
     return (
-        <article className={`${classes.root} ${isSelected ? 'selected' : ''}`} onClick={handleItemClick}>
+        <article className={`${classes.root} ${isSelected ? 'selected' : ''} ${isDiscarding ? 'discarding' : ''}`} onClick={handleItemClick}>
             <div className={classes.item}>
                 <div className={classes.itemContainer}>
                     {post.thumbnail && <img className={classes.thumbnail} src={post.thumbnail} alt="thumbnail" />}
