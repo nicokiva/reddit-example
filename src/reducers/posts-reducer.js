@@ -47,7 +47,8 @@ const reducer = (state = defaultState, action) => {
 
             return {
                 ...state,
-                posts: state.posts.filter(post => post !== discarded)
+                posts: state.posts.filter(post => post !== discarded),
+                selectedPost: state.selectedPost !== discarded ? state.selectedPost : undefined
             };
             
         default: return state
