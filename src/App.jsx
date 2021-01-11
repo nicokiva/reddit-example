@@ -4,7 +4,8 @@ import { Main } from './components/Main';
 
 const useStyles = makeStyles(() => ({
   root: {
-      display: 'flex'
+      display: 'flex',
+      backgroundColor: '#ffecd9',
   }
 }));
 

@@ -7,21 +7,24 @@ const useStyles = makeStyles(() => ({
         position: 'absolute',
         left: 0,
         top: 0,
-        width: '100%',
         height: '100%',
-        "@media(min-width: 600px)": {
-            marginLeft: '50px',
-            position: "unset"
+        padding: '0 20px 0 60px',
+        "@media(min-width: 800px)": {
+            position: "unset",
+            width: '100%'
         }
     }
 }));
 
 export const Content = ({ post }) => {
     const classes = useStyles();
+    if (post === undefined) {
+        return <></>;
+    }
 
     return (
         <div className={classes.root}>
-            
+            <p>Title: {post.title}</p>
         </div>
     )
 };

@@ -15,6 +15,6 @@ export const getPosts = () => {
     };
 };
 
-export const selectPost = post => {
-    return { type: 'SELECT_POST', payload: post }
-};
+export const selectPost = post => ({ type: 'SELECT_POST', payload: post });
+
+export const discardPost = post => ({ type: 'DISCARD_POST', payload: post });

@@ -25,18 +25,17 @@ const useStyles = makeStyles(() => ({
         top: 0,
         left: 0,
         height: '100vh',
-        width: 'calc(100% - 48px - 1px)',
-        borderRight: 'solid 1px rgb(236, 84, 40)',
         overflowY: 'auto',
         transition: 'width 2s',
-        "@media(min-width: 600px)": {
-            width: '400px',
+        width: '95vw',
+        "@media(min-width: 500px)": {
+            width: '480px',
         }
     },
     button: {
         transition: 'right 2s',
         position: 'absolute',
-        top: 0,
+        top: '10px',
         right: 0,
         backgroundColor: '#cac8c8',
         borderRadius: '5px',
@@ -44,7 +43,7 @@ const useStyles = makeStyles(() => ({
             backgroundColor: 'rgba(202, 200, 200, .7)', // Needs to override default
         },
         "@media(min-width: 600px)": {
-            right: 'calc(100% - 400px - 48px - 1px)' // 100% = viewport, 400px = sidebar width, 48px = button width, 1px = border
+            right: 'calc(100% - 500px + 1px)' // 100% = viewport, 500px = sidebar width, 1px = border
         }
     },
 }));
@@ -55,14 +54,20 @@ export const SideBar = props => {
 
     const handleSideBarVisibilityStatus = () => {
         setIsOpened(!isOpened);
-    }
+    };
+
+    const handleItemClick = () => {
+        if (window.outerWidth <= 800) {
+            setIsOpened(false);
+        }
+    };
 
     return (
         <div className={`${classes.root} ${!isOpened ? 'collapsed' : ''}`}>
             <div className={classes.sideBar}>
                 {props.loadingPosts && <LoadingSpinner label="Loading posts..." />}
                 {props.errorInLoad && <ErrorMessage label="Error loading data" />}
-                {props.posts && props.posts.map(post => (<PostItem key={post.id} post={post}></PostItem>))}
+                {props.posts && props.posts.map(post => (<PostItem onClick={handleItemClick} key={post.id} post={post}></PostItem>))}
             </div>
             <IconButton
                 className={classes.button}
