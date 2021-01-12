@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { SideBar } from './SideBar';
 import { getPosts } from '../actions'
 import { connect } from 'react-redux';
-import { Content } from './Content';
+import { Content } from './PostView';
 import { AppBar } from './AppBar';
 import { makeStyles } from '@material-ui/core';
 
