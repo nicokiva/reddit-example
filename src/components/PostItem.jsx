@@ -61,7 +61,7 @@ const useStyles = makeStyles(() => ({
         backgroundColor: 'rgb(255, 170, 138)',
         width: 'calc(100vw - 20px)',
         padding: '5px 10px',
-        height: '10px',
+        height: '20px',
         "@media(min-width: 500px)": {
             width: '440px', // 460px itemContainer width - 20px padding
         },
@@ -107,7 +107,12 @@ const useStyles = makeStyles(() => ({
         width: '10px',
         height: '10px',
         borderRadius: '50%',
-        backgroundColor: '#69698c'
+        backgroundColor: '#69698c',
+        float: 'left',
+        marginTop: '5px'
+    },
+    numComments: {
+        float: 'right'
     }
 }));
 
@@ -145,6 +150,7 @@ const PostItemInner = ({ selectedPost, discardingPost, post, readPosts, selectPo
             </div>
             <div className={classes.info}>
                 {!isRead && <div className={classes.notReadIndicator}></div>}
+                <span class={classes.numComments}># comments: {post.num_comments}</span>
             </div>
         </article>
     );
