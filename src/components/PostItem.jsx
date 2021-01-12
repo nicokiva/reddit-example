@@ -1,9 +1,10 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { selectPost, discardPost } from '../actions'
+import { selectPost, discardPost } from '../actions';
+import { date2string } from '../helpers/date';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
     root: {
         transition: 'padding-left 2s, width 2s',
         padding: '10px 10px 0',
@@ -52,6 +53,7 @@ const useStyles = makeStyles(theme => ({
     item: {
         display: 'flex',
         minHeight: '100px',
+        width: '100%'
     },
     info: {
         borderBottomLeftRadius: '10px',
@@ -80,7 +82,8 @@ const useStyles = makeStyles(theme => ({
         margin: '10px',
         display: 'flex',
         flexFlow: 'column',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        width: '100%'
     },
     createdDate: {
         textAlign: 'right',
@@ -92,6 +95,11 @@ const useStyles = makeStyles(theme => ({
     },
     title: {
         fontWeight: 'bold'
+    },
+    metaInfo: {
+        marginTop: '10px',
+        display: 'flex',
+        justifyContent: 'space-between'
     }
 }));
 
@@ -111,24 +119,19 @@ const PostItemInner = ({ selectedPost, discardingPost, post, selectPost, discard
         discardPost(post);
     }
 
-    const tryPad0 = number => number < 10 ? `0${number}` : number;
-
-    const date2string = stringifiedDate => {
-        const date = new Date(stringifiedDate);
-
-        return `${tryPad0(date.getMonth() + 1)}/${tryPad0(date.getDate())}/${date.getFullYear()} ${tryPad0(date.getHours())}:${tryPad0(date.getMinutes())}:${tryPad0(date.getSeconds())}`;
-    };
-
     return (
         <article className={`${classes.root} ${isSelected ? 'is-selected' : ''} ${isDiscarding ? 'is-discarding' : ''}`} onClick={handleItemClick}>
             <img className={classes.delete} src="/delete-icon.svg" alt="delete" title="Discard" onClick={handleDelete} />
             <div className={classes.itemContainer}>
                 <div className={classes.item}>
                     {post.thumbnail && <img className={classes.thumbnail} src={post.thumbnail} alt="thumbnail" />}
-                    <p className={classes.postInfo}>
+                    <div className={classes.postInfo}>
                         <span className={classes.title}>{post.title}</span>
-                        <span className={classes.createdDate}>{date2string(post.created_utc)}</span>
-                    </p>
+                        <div className={classes.metaInfo}>
+                            <span className={classes.createdDate}>by {post.author}</span>
+                            <span className={classes.createdDate}>at {date2string(post.created_utc)}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div className={classes.info}>ddd</div>

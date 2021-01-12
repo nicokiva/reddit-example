@@ -1,15 +1,42 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
+import { date2string } from '../helpers/date';
 
 const useStyles = makeStyles(() => ({
     root: {
         display: 'flex',
+        flexFlow: 'column',
         height: '100%',
-        padding: '0 20px 0 20px',
+        padding: '20px 20px 0 20px',
+        width: '100%',
+        textAlign: 'left',
         "@media(min-width: 800px)": {
-            paddingLeft: '60px',
             width: '100%'
         }
+    },
+    thumbnail: {
+        width: '100%',
+        height: 'auto',
+        maxHeight: '300px',
+        "@media(min-width: 800px)": {
+            maxHeight: '600px',
+        }
+    },
+    title: {
+        fontSize: '17px'
+    },
+    header: {
+        marginBottom: '10px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        fontSize: '14px',
+        color: '#6d6c6c'
+    },
+    author: {
+
+    },
+    createdAt: {
+        
     }
 }));
 
@@ -21,7 +48,12 @@ export const Content = ({ post }) => {
 
     return (
         <div className={classes.root}>
-            <p>Title: {post.title}</p>
+            <div className={classes.header}>
+                <span className={classes.createdAt}>{date2string(post.created_utc)}</span>
+                <span className={classes.author}>Created by {post.author}</span>
+            </div>
+            {post.thumbnail && <img src={post.thumbnail} className={classes.thumbnail} alt="Thumbnail" />}
+            <h1 className={classes.title}>{post.title}</h1>
         </div>
     )
 };

@@ -9,7 +9,8 @@ import { makeStyles } from '@material-ui/core';
 const useStyles = makeStyles(theme => ({
     contentWrapper: {
         marginTop: '65px',
-        display: 'flex'
+        display: 'flex',
+        width: '100%'
     }
 }));
 
