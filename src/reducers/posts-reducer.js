@@ -66,7 +66,10 @@ const reducer = (state = defaultState, action) => {
                 posts: []
             };
         case 'RESTORE_STATE':
-            return action.payload;
+            return {
+                ...state,
+                ...action.payload
+            }
         
         default: return state
     }
