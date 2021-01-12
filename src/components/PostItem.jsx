@@ -148,9 +148,10 @@ const PostItemInner = ({ selectedPost, discardingPost, post, readPosts, selectPo
                     </div>
                 </div>
             </div>
+
             <div className={classes.info}>
                 {!isRead && <div className={classes.notReadIndicator}></div>}
-                <span class={classes.numComments}># comments: {post.num_comments}</span>
+                <span className={classes.numComments}># comments: {post.num_comments}</span>
             </div>
         </article>
     );

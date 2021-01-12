@@ -14,7 +14,7 @@ const reducer = (state = defaultState, action) => {
                 ...state,
                 sideBarIsOpen: false
             };
-        
+
         default: return state
     }
 }

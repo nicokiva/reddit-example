@@ -65,7 +65,9 @@ const reducer = (state = defaultState, action) => {
                 isDiscardingAll: false,
                 posts: []
             };
-            
+        case 'RESTORE_STATE':
+            return action.payload;
+        
         default: return state
     }
 }

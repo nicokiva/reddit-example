@@ -29,3 +29,5 @@ export const clearAll = () =>
 
         setTimeout(() => dispatch({ type: 'DISCARD_ALL' }), 2000);
     };
+
+export const restoreState = state => ({ type: 'RESTORE_STATE', payload: state });

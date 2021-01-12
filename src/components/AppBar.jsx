@@ -1,18 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AppBarMaterial from '@material-ui/core/AppBar';
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
 import ClearAllIcon from '@material-ui/icons/ClearAll';
+import SaveIcon from '@material-ui/icons/Save';
+import RestoreIcon from '@material-ui/icons/Restore';
 import { connect } from 'react-redux';
-import { openSideBar, closeSideBar, clearAll } from '../actions';
+import { openSideBar, closeSideBar, clearAll, restoreState } from '../actions';
 
 const useStyles = makeStyles(() => ({
     root: {
         backgroundColor: '#fff'
     },
     button: {
+        marginLeft: '10px',
+        width: '48px',
         backgroundColor: 'rgb(255, 69, 0)',
         '&:hover': {
             backgroundColor: 'rgb(255, 69, 0)',
@@ -22,9 +26,8 @@ const useStyles = makeStyles(() => ({
             backgroundColor: 'rgb(204, 55, 0)'
         }
     },
-    clearAll: {
-        marginLeft: '10px',
-        width: '48px',
+    openDrawer: {
+        marginLeft: '0',
     },
     sideBarHandlerContainer: {
         transition: 'width 1s',
@@ -37,17 +40,41 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-const AppBarInner = ({ sideBarIsOpen, openSideBar, closeSideBar, clearAll }) => {
+const STORAGE_KEY = 'REDDIT_EXAMPLE';
+
+const AppBarInner = ({ openSideBar, closeSideBar, clearAll, restoreState, postsReducer, appReducer }) => {
+    const [ saved, setSaved ] = useState(false);
+
+    const { sideBarIsOpen } = appReducer;
+
     const classes = useStyles();
 
-    const handleClearAll = () => clearAll()
+    const handleClearAll = () => clearAll();
+    const save = () => {
+        // Only saves last in storage.
+        setSaved(true);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(postsReducer));
+    };
+    const restore = () => {
+        const lastState = localStorage.getItem(STORAGE_KEY);
+        if(!lastState) {
+            return;
+        }
+
+        restoreState(JSON.parse(lastState));
+    };
+
+    // User is able to restore only if there is anything to restore:
+    // 1. just saved
+    // 2. something already stored.
+    const canRestore = saved || localStorage.getItem(STORAGE_KEY) !== null;
 
     return (
         <AppBarMaterial className={classes.root}>
             <Toolbar>
                 <div className={`${classes.sideBarHandlerContainer} ${sideBarIsOpen ? 'is-opened' : ''}`}>
                     <IconButton
-                        className={`${classes.button} ${sideBarIsOpen ? 'is-opened' : ''}`}
+                        className={`${classes.button} ${classes.openDrawer} ${sideBarIsOpen ? 'is-opened' : ''}`}
                         color="inherit"
                         aria-label="open drawer"
                         onClick={sideBarIsOpen ? closeSideBar : openSideBar}
@@ -64,17 +91,34 @@ const AppBarInner = ({ sideBarIsOpen, openSideBar, closeSideBar, clearAll }) => 
                         <ClearAllIcon />
                     </IconButton>
                 </div>
+                <IconButton
+                    className={`${classes.save} ${classes.button}`}
+                    color="inherit"
+                    aria-label="save"
+                    onClick={save}
+                >
+                    <SaveIcon />
+                </IconButton>
+                {canRestore && <IconButton
+                    className={`${classes.save} ${classes.button}`}
+                    color="inherit"
+                    aria-label="restore"
+                    onClick={restore}
+                >
+                    <RestoreIcon />
+                </IconButton>}
             </Toolbar>
         </AppBarMaterial>
     )
 };
 
-const mapStateToProps = ({ appReducer }) => ({ ...appReducer });
+const mapStateToProps = reducers => reducers;
   
 const mapDispatchToProps = dispatch => ({
     openSideBar: () => dispatch(openSideBar()),
     closeSideBar: () => dispatch(closeSideBar()),
-    clearAll: () => dispatch(clearAll())
+    clearAll: () => dispatch(clearAll()),
+    restoreState: state => dispatch(restoreState(state))
 });
 
 export const AppBar = connect(mapStateToProps, mapDispatchToProps)(AppBarInner);
