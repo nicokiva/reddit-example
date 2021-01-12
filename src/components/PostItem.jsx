@@ -60,8 +60,10 @@ const useStyles = makeStyles(() => ({
         borderBottomRightRadius: '10px',
         backgroundColor: 'rgb(255, 170, 138)',
         width: 'calc(100vw - 20px)',
+        padding: '5px 10px',
+        height: '10px',
         "@media(min-width: 500px)": {
-            width: '460px',
+            width: '440px', // 460px itemContainer width - 20px padding
         },
     },
     delete: {
@@ -100,12 +102,19 @@ const useStyles = makeStyles(() => ({
         marginTop: '10px',
         display: 'flex',
         justifyContent: 'space-between'
+    },
+    notReadIndicator: {
+        width: '10px',
+        height: '10px',
+        borderRadius: '50%',
+        backgroundColor: '#69698c'
     }
 }));
 
-const PostItemInner = ({ selectedPost, discardingPost, post, selectPost, discardPost, onClick, isDiscardingAll }) => {
+const PostItemInner = ({ selectedPost, discardingPost, post, readPosts, selectPost, discardPost, onClick, isDiscardingAll }) => {
     const classes = useStyles();
 
+    const isRead = readPosts.includes(post);
     const isSelected = post === selectedPost;
     const isDiscarding = post === discardingPost || isDiscardingAll;
 
@@ -134,7 +143,9 @@ const PostItemInner = ({ selectedPost, discardingPost, post, selectPost, discard
                     </div>
                 </div>
             </div>
-            <div className={classes.info}>ddd</div>
+            <div className={classes.info}>
+                {!isRead && <div className={classes.notReadIndicator}></div>}
+            </div>
         </article>
     );
 };

@@ -2,6 +2,7 @@ const defaultState = {
     loadingPosts: false,
     errorInLoad: false,
     posts: [],
+    readPosts: [],
     selectedPost: undefined,
     discardingPost: undefined,
     isDiscardingAll: false
@@ -34,7 +35,8 @@ const reducer = (state = defaultState, action) => {
 
             return {
                 ...state,
-                selectedPost
+                selectedPost,
+                readPosts: !state.readPosts.includes(selectedPost) ? [...state.readPosts, selectedPost] : state.readPosts
             };
         case 'DISCARDING_POST': 
             const { payload: discardingPost } = action;
@@ -54,7 +56,8 @@ const reducer = (state = defaultState, action) => {
         case 'DISCARDING_ALL': 
             return {
                 ...state,
-                isDiscardingAll: true
+                isDiscardingAll: true,
+                selectedPost: undefined
             };
         case 'DISCARD_ALL': 
             return {

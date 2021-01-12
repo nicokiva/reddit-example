@@ -32,12 +32,6 @@ const useStyles = makeStyles(() => ({
         fontSize: '14px',
         color: '#6d6c6c'
     },
-    author: {
-
-    },
-    createdAt: {
-        
-    }
 }));
 
 export const Content = ({ post }) => {
@@ -49,8 +43,8 @@ export const Content = ({ post }) => {
     return (
         <div className={classes.root}>
             <div className={classes.header}>
-                <span className={classes.createdAt}>{date2string(post.created_utc)}</span>
-                <span className={classes.author}>Created by {post.author}</span>
+                <span>{date2string(post.created_utc)}</span>
+                <span>Created by {post.author}</span>
             </div>
             {post.thumbnail && <img src={post.thumbnail} className={classes.thumbnail} alt="Thumbnail" />}
             <h1 className={classes.title}>{post.title}</h1>
