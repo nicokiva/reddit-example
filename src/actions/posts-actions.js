@@ -22,3 +22,10 @@ export const discardPost = post =>
 
         setTimeout(() => dispatch({ type: 'DISCARD_POST', payload: post }), 2000);
     };
+
+export const clearAll = () => 
+    async dispatch => {
+        dispatch(({ type: 'DISCARDING_ALL' }))
+
+        setTimeout(() => dispatch({ type: 'DISCARD_ALL' }), 2000);
+    };

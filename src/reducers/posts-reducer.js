@@ -3,7 +3,8 @@ const defaultState = {
     errorInLoad: false,
     posts: [],
     selectedPost: undefined,
-    discardingPost: undefined
+    discardingPost: undefined,
+    isDiscardingAll: false
 };
 
 const reducer = (state = defaultState, action) => {
@@ -49,6 +50,17 @@ const reducer = (state = defaultState, action) => {
                 ...state,
                 posts: state.posts.filter(post => post !== discarded),
                 selectedPost: state.selectedPost !== discarded ? state.selectedPost : undefined
+            };
+        case 'DISCARDING_ALL': 
+            return {
+                ...state,
+                isDiscardingAll: true
+            };
+        case 'DISCARD_ALL': 
+            return {
+                ...state,
+                isDiscardingAll: false,
+                posts: []
             };
             
         default: return state

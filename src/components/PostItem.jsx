@@ -103,11 +103,11 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-const PostItemInner = ({ selectedPost, discardingPost, post, selectPost, discardPost, onClick }) => {
+const PostItemInner = ({ selectedPost, discardingPost, post, selectPost, discardPost, onClick, isDiscardingAll }) => {
     const classes = useStyles();
 
     const isSelected = post === selectedPost;
-    const isDiscarding = post === discardingPost;
+    const isDiscarding = post === discardingPost || isDiscardingAll;
 
     const handleItemClick = () => {
         selectPost(post);
