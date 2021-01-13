@@ -66,9 +66,14 @@ const reducer = (state = defaultState, action) => {
                 posts: []
             };
         case 'RESTORE_STATE':
+            const { readPosts: read, posts, ...others } = action.payload;
+            const readPosts = read.map(({ id: readPostId }) => posts.find(({ id: postId }) => readPostId === postId));
+
             return {
                 ...state,
-                ...action.payload
+                readPosts,
+                posts,
+                ...others
             }
         
         default: return state
