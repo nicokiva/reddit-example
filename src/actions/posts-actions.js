@@ -2,7 +2,7 @@ export const getPosts = () =>
     async dispatch => {
         dispatch({ type: 'POSTS_LOAD_IN_PROCESS' });
 
-        const response = await fetch(`metadata.json`, {
+        const response = await fetch(`https://www.reddit.com/r/popular/top.json`, {
             mode: 'cors',
         });
 
