@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/nicokiva/reddit-example/static/css/main.8c8b27cf.chunk.css",
-    "main.js": "/nicokiva/reddit-example/static/js/main.4c02a7d4.chunk.js",
-    "main.js.map": "/nicokiva/reddit-example/static/js/main.4c02a7d4.chunk.js.map",
-    "runtime-main.js": "/nicokiva/reddit-example/static/js/runtime-main.38905996.js",
-    "runtime-main.js.map": "/nicokiva/reddit-example/static/js/runtime-main.38905996.js.map",
-    "static/js/2.457fd3cc.chunk.js": "/nicokiva/reddit-example/static/js/2.457fd3cc.chunk.js",
-    "static/js/2.457fd3cc.chunk.js.map": "/nicokiva/reddit-example/static/js/2.457fd3cc.chunk.js.map",
-    "static/js/3.7f19f5f1.chunk.js": "/nicokiva/reddit-example/static/js/3.7f19f5f1.chunk.js",
-    "static/js/3.7f19f5f1.chunk.js.map": "/nicokiva/reddit-example/static/js/3.7f19f5f1.chunk.js.map",
-    "index.html": "/nicokiva/reddit-example/index.html",
-    "static/css/main.8c8b27cf.chunk.css.map": "/nicokiva/reddit-example/static/css/main.8c8b27cf.chunk.css.map",
-    "static/js/2.457fd3cc.chunk.js.LICENSE.txt": "/nicokiva/reddit-example/static/js/2.457fd3cc.chunk.js.LICENSE.txt"
+    "main.css": "/reddit-example/static/css/main.8c8b27cf.chunk.css",
+    "main.js": "/reddit-example/static/js/main.4c02a7d4.chunk.js",
+    "main.js.map": "/reddit-example/static/js/main.4c02a7d4.chunk.js.map",
+    "runtime-main.js": "/reddit-example/static/js/runtime-main.79f9cefd.js",
+    "runtime-main.js.map": "/reddit-example/static/js/runtime-main.79f9cefd.js.map",
+    "static/js/2.457fd3cc.chunk.js": "/reddit-example/static/js/2.457fd3cc.chunk.js",
+    "static/js/2.457fd3cc.chunk.js.map": "/reddit-example/static/js/2.457fd3cc.chunk.js.map",
+    "static/js/3.7f19f5f1.chunk.js": "/reddit-example/static/js/3.7f19f5f1.chunk.js",
+    "static/js/3.7f19f5f1.chunk.js.map": "/reddit-example/static/js/3.7f19f5f1.chunk.js.map",
+    "index.html": "/reddit-example/index.html",
+    "static/css/main.8c8b27cf.chunk.css.map": "/reddit-example/static/css/main.8c8b27cf.chunk.css.map",
+    "static/js/2.457fd3cc.chunk.js.LICENSE.txt": "/reddit-example/static/js/2.457fd3cc.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.38905996.js",
+    "static/js/runtime-main.79f9cefd.js",
     "static/js/2.457fd3cc.chunk.js",
     "static/css/main.8c8b27cf.chunk.css",
     "static/js/main.4c02a7d4.chunk.js"
