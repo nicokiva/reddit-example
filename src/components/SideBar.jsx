@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { LoadingSpinner } from './utilitarian/LoadingSpinner';
 import { ErrorMessage } from './utilitarian/ErrorMessage';
+import { WarningMessage } from './utilitarian/WarningMessage';
 import { PostItem } from './PostItem';
 import { connect } from 'react-redux';
 import { closeSideBar } from '../actions';
@@ -45,7 +46,7 @@ const useStyles = makeStyles(() => ({
         "@media(min-width: 600px)": {
             right: 'calc(100% - 500px + 1px)' // 100% = viewport, 500px = sidebar width, 1px = border
         }
-    },
+    }
 }));
 
 const SideBarInner = ({ loadingPosts, errorInLoad, posts, sideBarIsOpen, closeSideBar }) => {
@@ -62,7 +63,8 @@ const SideBarInner = ({ loadingPosts, errorInLoad, posts, sideBarIsOpen, closeSi
             <div className={classes.sideBar}>
                 {loadingPosts && <LoadingSpinner label="Loading posts..." />}
                 {errorInLoad && <ErrorMessage label="Error loading data" />}
-                {posts && posts.map(post => (<PostItem onClick={handleItemClick} key={post.id} post={post}></PostItem>))}
+                {!loadingPosts && !errorInLoad && posts && posts.map(post => (<PostItem onClick={handleItemClick} key={post.id} post={post}></PostItem>))}
+                {!loadingPosts && !errorInLoad && !posts.length && <WarningMessage label="Nothing to be displayed!" />}
             </div>
         </div>
     );
