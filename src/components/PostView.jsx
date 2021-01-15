@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import { date2string } from '../helpers/date';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -34,7 +35,7 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-export const Content = ({ post }) => {
+export const PostViewInner = ({ selectedPost: post }) => {
     const classes = useStyles();
     if (post === undefined) {
         return <></>;
@@ -51,3 +52,7 @@ export const Content = ({ post }) => {
         </div>
     )
 };
+
+const mapStateToProps = ({ postsReducer }) => ({ ...postsReducer });
+  
+export const PostView = connect(mapStateToProps)(PostViewInner);

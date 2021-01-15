@@ -52,10 +52,17 @@ const AppBarInner = ({ openSideBar, closeSideBar, clearAll, restoreState, postsR
     const handleClearAll = () => clearAll();
     const save = () => {
         
-        const { posts, readPosts, selectedPost } = postsReducer;
+        const { posts, readPosts, selectedPost, lastPostId } = postsReducer;
         // Only saves last in storage.
         setSaved(true);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify({ posts, readPosts, selectedPost }));
+        try {
+            // We don't need to save any status or any flag.
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({ posts, readPosts, selectedPost, lastPostId }));
+        } catch ({ name }) {
+            if (name === 'QuotaExceededError') {
+                alert('Oops, the amount of posts you are trying to save exceeds the quota, please remove many from the list and retry!')
+            }
+        }
     };
     const restore = () => {
         const lastState = localStorage.getItem(STORAGE_KEY);

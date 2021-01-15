@@ -1,8 +1,8 @@
-export const getPosts = () => 
+export const getPosts = lastLoadedId => 
     async dispatch => {
         dispatch({ type: 'POSTS_LOAD_IN_PROCESS' });
 
-        const response = await fetch(`https://www.reddit.com/r/popular/top.json`, {
+        const response = await fetch(`https://www.reddit.com/r/popular/top.json?limit=10${(lastLoadedId ? `&after=${lastLoadedId}` : '')}`, {
             mode: 'cors',
         });
 

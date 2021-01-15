@@ -5,7 +5,8 @@ const useStyles = makeStyles(theme => ({
     root: {
        display: 'flex',
        flexFlow: 'column',
-       paddingTop: '50px'
+       paddingTop: '50px',
+       paddingBottom: '50px'
     },
     content: {
         margin: '0 auto 20px'

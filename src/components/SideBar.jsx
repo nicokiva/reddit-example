@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { LoadingSpinner } from './utilitarian/LoadingSpinner';
 import { ErrorMessage } from './utilitarian/ErrorMessage';
 import { WarningMessage } from './utilitarian/WarningMessage';
 import { PostItem } from './PostItem';
 import { connect } from 'react-redux';
-import { closeSideBar } from '../actions';
+import { closeSideBar, getPosts } from '../actions';
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -49,8 +49,40 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-const SideBarInner = ({ loadingPosts, errorInLoad, posts, sideBarIsOpen, closeSideBar }) => {
+const SideBarInner = ({ loadingPosts, errorInLoad, posts, sideBarIsOpen, closeSideBar, getPosts, lastPostId }) => {
     const classes = useStyles();
+
+    const sideBarRef = useRef(null);
+    useEffect(() => {
+        // Initial request used to fetch first 10 records.
+        getPosts();
+    }, [getPosts]);
+
+    // When user reaches the end of the list, it triggers a reload of the items.
+    // As scroll event is triggered many times, this semaphore
+    // is used to prevent to reload many times.
+    // 'loadingPosts' var cannot be used because it arrives async, so by the moment it comes,
+    // the event executed many times.
+    let isLoading = false;
+    useEffect(() => {
+        const onScroll = () => {
+            if (
+                sideBarRef.current.scrollTop + sideBarRef.current.clientHeight >=
+                sideBarRef.current.scrollHeight &&
+                !isLoading &&
+                lastPostId
+            ) {
+                // eslint-disable-next-line react-hooks/exhaustive-deps
+                isLoading = true;
+                getPosts(lastPostId);
+            }
+        };
+
+        sideBarRef.current.addEventListener('scroll', onScroll)
+
+        return () => window.removeEventListener("scroll", onScroll);
+    }, [getPosts, lastPostId]);
+
 
     const handleItemClick = () => {
         if (window.outerWidth <= 800) {
@@ -60,20 +92,21 @@ const SideBarInner = ({ loadingPosts, errorInLoad, posts, sideBarIsOpen, closeSi
 
     return (
         <div className={`${classes.root} ${!sideBarIsOpen ? 'collapsed' : ''}`}>
-            <div className={classes.sideBar}>
-                {loadingPosts && <LoadingSpinner label="Loading posts..." />}
+            <div className={classes.sideBar} ref={sideBarRef}>
                 {errorInLoad && <ErrorMessage label="Error loading data" />}
-                {!loadingPosts && !errorInLoad && posts && posts.map(post => (<PostItem onClick={handleItemClick} key={post.id} post={post}></PostItem>))}
-                {!loadingPosts && !errorInLoad && !posts.length && <WarningMessage label="Nothing to be displayed!" />}
+                {posts && posts.map(post => (<PostItem onClick={handleItemClick} key={post.id} post={post}></PostItem>))}
+                {!posts.length && <WarningMessage label="Nothing to be displayed!" />}
+                {loadingPosts && <LoadingSpinner label="Loading posts..." />}
             </div>
         </div>
     );
 };
 
-const mapStateToProps = ({ appReducer }) => ({ ...appReducer });
+const mapStateToProps = ({ appReducer, postsReducer }) => ({ ...appReducer, ...postsReducer });
   
 const mapDispatchToProps = dispatch => ({
-    closeSideBar: () => dispatch(closeSideBar())
+    closeSideBar: () => dispatch(closeSideBar()),
+    getPosts: lastPostId => dispatch(getPosts(lastPostId))
 });
 
 export const SideBar = connect(mapStateToProps, mapDispatchToProps)(SideBarInner);

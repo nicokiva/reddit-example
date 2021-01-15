@@ -2,10 +2,11 @@ const defaultState = {
     loadingPosts: false,
     errorInLoad: false,
     posts: [],
+    lastPostId: undefined,
     readPosts: [],
     selectedPost: undefined,
     discardingPost: undefined,
-    isDiscardingAll: false
+    isDiscardingAll: false,
 };
 
 const reducer = (state = defaultState, action) => {
@@ -28,7 +29,8 @@ const reducer = (state = defaultState, action) => {
                 ...state,
                 loadingPosts: false,
                 errorInLoad: false,
-                posts: data.map(({ data }) => data)
+                posts: [...state.posts, ...data.map(({ data }) => data)],
+                lastPostId: `${data[data.length - 1].kind}_${data[data.length - 1].data.id}`
             };
         case 'SELECT_POST': 
             const { payload: selectedPost } = action;
