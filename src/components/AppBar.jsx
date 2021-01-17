@@ -50,8 +50,8 @@ const AppBarInner = ({ openSideBar, closeSideBar, clearAll, restoreState, postsR
     const classes = useStyles();
 
     const handleClearAll = () => clearAll();
+    
     const save = () => {
-        
         const { posts, readPosts, selectedPost, lastPostId } = postsReducer;
         // Only saves last in storage.
         setSaved(true);
@@ -64,6 +64,7 @@ const AppBarInner = ({ openSideBar, closeSideBar, clearAll, restoreState, postsR
             }
         }
     };
+
     const restore = () => {
         const lastState = localStorage.getItem(STORAGE_KEY);
         if(!lastState) {

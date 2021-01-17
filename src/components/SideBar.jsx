@@ -63,6 +63,7 @@ const SideBarInner = ({ loadingPosts, errorInLoad, posts, sideBarIsOpen, closeSi
     // is used to prevent to reload many times.
     // 'loadingPosts' var cannot be used because it arrives async, so by the moment it comes,
     // the event executed many times.
+    // Another approach for this may have been to debounce the execution of getPosts
     let isLoading = false;
     useEffect(() => {
         const onScroll = () => {
