@@ -2,7 +2,8 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { selectPost, discardPost } from '../actions';
-import { date2string } from '../helpers/date';
+import TimeAgo from 'javascript-time-ago';
+import en from 'javascript-time-ago/locale/en'
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -116,6 +117,9 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
+TimeAgo.addDefaultLocale(en)
+const timeAgo = new TimeAgo('en-US')
+
 const PostItemInner = ({ selectedPost, discardingPost, post, readPosts, selectPost, discardPost, onClick, isDiscardingAll }) => {
     const classes = useStyles();
 
@@ -134,30 +138,30 @@ const PostItemInner = ({ selectedPost, discardingPost, post, readPosts, selectPo
     }
 
     return (
-        <article className={`${classes.root} ${isSelected ? 'is-selected' : ''} ${isDiscarding ? 'is-discarding' : ''}`} onClick={handleItemClick}>
-            <img className={classes.delete} src="/delete-icon.svg" alt="delete" title="Discard" onClick={handleDelete} />
+        <article data-testid="post-container" className={`${classes.root} ${isSelected ? 'is-selected' : ''} ${isDiscarding ? 'is-discarding' : ''}`} onClick={handleItemClick}>
+            <img className={classes.delete} data-testid="post-delete" src="/delete-icon.svg" alt="delete" title="Discard" onClick={handleDelete} />
             <div className={classes.itemContainer}>
                 <div className={classes.item}>
-                    {post.thumbnail && <img className={classes.thumbnail} src={post.thumbnail} alt="thumbnail" />}
+                    {post.thumbnail && <img className={classes.thumbnail} src={post.thumbnail} data-testid="post-thumbnail" alt="thumbnail" />}
                     <div className={classes.postInfo}>
-                        <span className={classes.title}>{post.title}</span>
+                        <span className={classes.title} data-testid="post-title">{post.title}</span>
                         <div className={classes.metaInfo}>
-                            <span className={classes.createdDate}>by {post.author}</span>
-                            <span className={classes.createdDate}>at {date2string(post.created_utc)}</span>
+                            <span className={classes.createdDate} data-testid="post-author">by {post.author}</span>
+                            <span className={classes.createdDate} data-testid="post-created-date">{timeAgo.format(new Date(post.created_utc * 1000))}</span>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div className={classes.info}>
-                {!isRead && <div className={classes.notReadIndicator}></div>}
-                <span className={classes.numComments}># comments: {post.num_comments}</span>
+                {!isRead && <div className={classes.notReadIndicator} data-testid="post-unread-indicator"></div>}
+                <span className={classes.numComments} data-testid="post-num-comments"># comments: {post.num_comments}</span>
             </div>
         </article>
     );
 };
 
-const mapStateToProps = ({ postsReducer }) => ({ ...postsReducer });
+const mapStateToProps = ({ postsReducer }) => postsReducer;
   
 const mapDispatchToProps = dispatch => ({
     selectPost: post => dispatch(selectPost(post)),
