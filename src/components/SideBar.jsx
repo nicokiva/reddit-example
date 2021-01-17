@@ -64,6 +64,7 @@ const SideBarInner = ({ loadingPosts, errorInLoad, posts, sideBarIsOpen, closeSi
     // 'loadingPosts' var cannot be used because it arrives async, so by the moment it comes,
     // the event executed many times.
     // Another approach for this may have been to debounce the execution of getPosts
+    // [REF #1]
     let isLoading = false;
     useEffect(() => {
         const onScroll = () => {

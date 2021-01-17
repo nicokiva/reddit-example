@@ -1,3 +1,50 @@
+# Decisions
+
+### How to create the app
+The options analyzed where 2:
+1. To use a library such as Create React App which generates the scaffolding of the app and extra tools such as webpack or testing framework, everything already configured.
+2. To create the environment from scratch adding all the libraries I need and when I need.
+
+Option #1 is good but there are several limitations. For example Webpack is already configured (you may need another library to edit  it), you get libraries you do not need.
+Option #2, instead, is a really good decision because you add libraries you need whenever you need and you are free to configure the project the way you want, from scratch.
+However I decided Option #1. The goal of the project did not require any extra customization, so installing everything from scratch would have been a not needed extra effort.
+
+### TypeScript or not
+> TypeScript is an open-source language which builds on JavaScript
+
+TypeScript allows developers to add types to the entities in the app.
+Despite TypeScript is one of my first choices on every project, having to get concerned about types on a simple app would have been useless.
+
+### Project structure
+```
+/src
+    /reducers
+    /actions
+    /components
+        /utilitarian
+    /helpers
+```
+
+* __Reducers:__ the reducers of the app. There are two different reducers to separate `posts` and `app` logic. App logic is related to the functionality of the structure of the app (such as sidebar status). Posts logic is about how posts are loaded and manipulated. 
+
+* __Actions:__ the actions of the app and follows the same logic as the reducers.
+
+* __Components:__ the html of the app. The files inside this folder contains the HTML used to render each piece of the app. Components inside utilitarian can be reused as they are agnostic.
+
+* __Helpers:__ reusable functions not business case related.
+
+### Material UI vs another library / custom
+The reason for picking Material UI vs another library or creating custom components is because they provide the required components I needed to develop the app with minimum effort.
+
+### Code decisions
+
+__[REF #1]:__ when developing the action of refetch the data when user scroll down, in file `src/components/SideBar.jsx`, as scroll can move up and down, I needed to find a way to `fetch only once`. In other words, if fetch was triggered, it should not trigger again.
+1. __Semaphore:__ if fetch, then change a boolean which will prevent from fetching again. Next time React library renders the component again, the value will be false again allowing to fetch the data again.
+
+2. __Debounce execution:__ debounce the execution of the fetch function for some miliseconds, so will start refetching as soon as user stop scrolling.
+
+The option I picked was #1 because of the simplicity.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
