@@ -97,7 +97,7 @@ const SideBarInner = ({ loadingPosts, errorInLoad, posts, sideBarIsOpen, closeSi
             <div className={classes.sideBar} ref={sideBarRef}>
                 {errorInLoad && <ErrorMessage label="Error loading data" />}
                 {posts && posts.map(post => (<PostItem onClick={handleItemClick} key={post.id} post={post}></PostItem>))}
-                {!posts.length && <WarningMessage label="Nothing to be displayed!" />}
+                {!loadingPosts && !posts.length && <WarningMessage label="Nothing to be displayed!" />}
                 {loadingPosts && <LoadingSpinner label="Loading posts..." />}
             </div>
         </div>

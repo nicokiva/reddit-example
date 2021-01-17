@@ -22,7 +22,6 @@ Despite TypeScript is one of my first choices on every project, having to get co
     /actions
     /components
         /utilitarian
-    /helpers
 ```
 
 * __Reducers:__ the reducers of the app. There are two different reducers to separate `posts` and `app` logic. App logic is related to the functionality of the structure of the app (such as sidebar status). Posts logic is about how posts are loaded and manipulated. 
@@ -30,8 +29,6 @@ Despite TypeScript is one of my first choices on every project, having to get co
 * __Actions:__ the actions of the app and follows the same logic as the reducers.
 
 * __Components:__ the html of the app. The files inside this folder contains the HTML used to render each piece of the app. Components inside utilitarian can be reused as they are agnostic.
-
-* __Helpers:__ reusable functions not business case related.
 
 ### Material UI vs another library / custom
 The reason for picking Material UI vs another library or creating custom components is because they provide the required components I needed to develop the app with minimum effort.
