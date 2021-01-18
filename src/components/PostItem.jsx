@@ -2,8 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { selectPost, discardPost } from '../actions';
-import TimeAgo from 'javascript-time-ago';
-import en from 'javascript-time-ago/locale/en'
+import { timeAgo } from './Main';
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -116,9 +115,6 @@ const useStyles = makeStyles(() => ({
         float: 'right'
     }
 }));
-
-TimeAgo.addDefaultLocale(en)
-const timeAgo = new TimeAgo('en-US')
 
 const PostItemInner = ({ selectedPost, discardingPost, post, readPosts, selectPost, discardPost, onClick, isDiscardingAll }) => {
     const classes = useStyles();

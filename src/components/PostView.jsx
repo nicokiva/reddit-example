@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
-import { date2string } from '../helpers/date';
 import { connect } from 'react-redux';
+import { timeAgo } from './Main';
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -44,7 +44,7 @@ export const PostViewInner = ({ selectedPost: post }) => {
     return (
         <div className={classes.root}>
             <div className={classes.header}>
-                <span>{date2string(post.created_utc)}</span>
+                <span>{timeAgo.format(new Date(post.created_utc * 1000))}</span>
                 <span>Created by {post.author}</span>
             </div>
             {post.thumbnail && <img src={post.thumbnail} className={classes.thumbnail} alt="Thumbnail" />}

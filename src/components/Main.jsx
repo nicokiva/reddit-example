@@ -4,6 +4,12 @@ import { PostView } from './PostView';
 import { AppBar } from './AppBar';
 import { makeStyles } from '@material-ui/core';
 
+import TimeAgo from 'javascript-time-ago';
+import en from 'javascript-time-ago/locale/en'
+
+TimeAgo.addDefaultLocale(en)
+export const timeAgo = new TimeAgo('en-US')
+
 const useStyles = makeStyles(theme => ({
     contentWrapper: {
         marginTop: '65px',
