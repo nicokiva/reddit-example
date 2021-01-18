@@ -1,18 +1,7 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
-import { createStore } from "redux";
-import { Provider } from "react-redux";
-import reducer from "../reducers";
+import { screen, fireEvent } from "@testing-library/react";
 import { PostItem } from "./PostItem";
-
-export const renderWithState = (ui, { initialState, ...renderOptions } = {}) => {
-    const store = createStore(reducer, initialState);
-    const Wrapper = ({ children }) => (
-        <Provider store={store}>{children}</Provider>
-    );
-
-    return render(ui, { wrapper: Wrapper, ...renderOptions });
-};
+import { renderWithState } from "./helpers/Test";
 
 describe("PostItem", () => {
 
