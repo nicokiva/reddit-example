@@ -38,7 +38,7 @@ const useStyles = makeStyles(() => ({
 export const PostViewInner = ({ selectedPost: post }) => {
     const classes = useStyles();
     if (post === undefined) {
-        return <></>;
+        return null;
     }
 
     return (

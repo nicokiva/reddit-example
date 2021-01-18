@@ -50,7 +50,7 @@ const AppBarInner = ({ openSideBar, closeSideBar, clearAll, restoreState, postsR
     const classes = useStyles();
 
     const handleClearAll = () => clearAll();
-    
+
     const save = () => {
         const { posts, readPosts, selectedPost, lastPostId } = postsReducer;
         // Only saves last in storage.
@@ -87,13 +87,14 @@ const AppBarInner = ({ openSideBar, closeSideBar, clearAll, restoreState, postsR
                         className={`${classes.button} ${classes.openDrawer} ${sideBarIsOpen ? 'is-opened' : ''}`}
                         color="inherit"
                         aria-label="open drawer"
+                        data-testid="sidebar-opener"
                         onClick={sideBarIsOpen ? closeSideBar : openSideBar}
                     >
                         <MenuIcon />
                     </IconButton>
 
                     <IconButton
-                        className={`${classes.button} ${classes.clearAll}`}
+                        className={classes.button}
                         color="inherit"
                         aria-label="clear all"
                         onClick={handleClearAll}
@@ -102,7 +103,7 @@ const AppBarInner = ({ openSideBar, closeSideBar, clearAll, restoreState, postsR
                     </IconButton>
                 </div>
                 <IconButton
-                    className={`${classes.save} ${classes.button}`}
+                    className={classes.button}
                     color="inherit"
                     aria-label="save"
                     onClick={save}
@@ -110,7 +111,7 @@ const AppBarInner = ({ openSideBar, closeSideBar, clearAll, restoreState, postsR
                     <SaveIcon />
                 </IconButton>
                 {canRestore && <IconButton
-                    className={`${classes.save} ${classes.button}`}
+                    className={classes.button}
                     color="inherit"
                     aria-label="restore"
                     onClick={restore}
